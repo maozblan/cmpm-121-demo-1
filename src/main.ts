@@ -12,7 +12,9 @@ app.append(header);
 // clicker button
 const clicker: HTMLButtonElement = document.createElement("button");
 clicker.textContent = "☕"; // coffee emoji (it's just small)
-clicker.onclick = incrementCoffeeCount;
+clicker.addEventListener("click", () => {
+  incrementCoffeeCount(1);
+});
 app.append(clicker);
 
 // coffee counter
@@ -22,8 +24,25 @@ counter.textContent = `${coffeeCount} coffees`;
 app.append(counter);
 
 // automatic incrementer
-setInterval(incrementCoffeeCount, 1000);
-function incrementCoffeeCount(): void {
-  coffeeCount++;
-  counter.textContent = `${coffeeCount} coffees`;
+requestAnimationFrame(continuousCoffeeGrowth);
+let lastTimeStamp: number;
+function continuousCoffeeGrowth(): void {
+  // first run
+  if (lastTimeStamp === undefined) {
+    lastTimeStamp = performance.now();
+    requestAnimationFrame(continuousCoffeeGrowth);
+    return;
+  }
+
+  // looping
+  requestAnimationFrame(continuousCoffeeGrowth);
+
+  const currentTimeStamp: number = performance.now();
+  incrementCoffeeCount((currentTimeStamp - lastTimeStamp) / 1000);
+  lastTimeStamp = currentTimeStamp;
+}
+
+function incrementCoffeeCount(amount: number): void {
+  coffeeCount += amount;
+  counter.textContent = `${Math.floor(coffeeCount)} coffees`;
 }
