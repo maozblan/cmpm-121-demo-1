@@ -12,10 +12,7 @@ app.append(header);
 // clicker button
 const clicker: HTMLButtonElement = document.createElement("button");
 clicker.textContent = "☕"; // coffee emoji (it's just small)
-clicker.onclick = () => {
-  coffeeCount++;
-  counter.textContent = `${coffeeCount} coffees`;
-};
+clicker.onclick = incrementCoffeeCount;
 app.append(clicker);
 
 // coffee counter
@@ -23,3 +20,10 @@ const counter: HTMLDivElement = document.createElement("div");
 let coffeeCount: number = 0;
 counter.textContent = `${coffeeCount} coffees`;
 app.append(counter);
+
+// automatic incrementer
+setInterval(incrementCoffeeCount, 1000);
+function incrementCoffeeCount(): void {
+  coffeeCount++;
+  counter.textContent = `${coffeeCount} coffees`;
+}
