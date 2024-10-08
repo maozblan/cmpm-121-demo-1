@@ -46,7 +46,7 @@ requestAnimationFrame(continuousCoffeeGrowth);
 function incrementCoffeeCount(amount: number): void {
   coffeeCount += amount;
   counter.textContent = `${Math.floor(coffeeCount)} coffees`;
-  upgradeA.updateButton();
+  update();
 }
 
 // upgrader
@@ -126,14 +126,26 @@ class BaseUpgrade implements Upgrade {
 let rate: number = 0;
 function updateRate(amount: number): void {
   rate += amount;
-  rateDisplay.textContent = `rate: ${rate.toPrecision(3)} coffees per second`;
+  rateDisplay.textContent = `rate: ${rate.toFixed(1)} coffees per second`;
 }
 
 const upgradeA: BaseUpgrade = new BaseUpgrade("upgradeA", 10, 0.1);
 app.append(upgradeA.button);
 app.append(upgradeA.display);
+const upgradeB: BaseUpgrade = new BaseUpgrade("upgradeB", 100, 2);
+app.append(upgradeB.button);
+app.append(upgradeB.display);
+const upgradeC: BaseUpgrade = new BaseUpgrade("upgradeC", 1000, 50);
+app.append(upgradeC.button);
+app.append(upgradeC.display);
+
+function update(): void {
+  upgradeA.updateButton();
+  upgradeB.updateButton();
+  upgradeC.updateButton();
+}
 
 const rateDisplay: HTMLDivElement = document.createElement("div");
-rateDisplay.textContent = `rate: ${rate.toPrecision(3)} coffees per second`;
+rateDisplay.textContent = `rate: ${rate.toFixed(1)} coffees per second`;
 rateDisplay.style.marginTop = "30px";
 app.append(rateDisplay);
