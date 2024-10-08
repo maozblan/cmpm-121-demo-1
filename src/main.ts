@@ -24,7 +24,6 @@ counter.textContent = `${coffeeCount} coffees`;
 app.append(counter);
 
 // automatic incrementer
-requestAnimationFrame(continuousCoffeeGrowth);
 let lastTimeStamp: number;
 function continuousCoffeeGrowth(): void {
   // first run
@@ -38,11 +37,34 @@ function continuousCoffeeGrowth(): void {
   requestAnimationFrame(continuousCoffeeGrowth);
 
   const currentTimeStamp: number = performance.now();
-  incrementCoffeeCount((currentTimeStamp - lastTimeStamp) / 1000);
+  incrementCoffeeCount(
+    ((currentTimeStamp - lastTimeStamp) / 1000) * (upgraderCount + 1),
+  );
   lastTimeStamp = currentTimeStamp;
 }
 
 function incrementCoffeeCount(amount: number): void {
   coffeeCount += amount;
   counter.textContent = `${Math.floor(coffeeCount)} coffees`;
+  updateButton();
 }
+
+// upgrader
+const upgrader: HTMLButtonElement = document.createElement("button");
+const upgraderCountDisplay: HTMLDivElement = document.createElement("div");
+let upgraderCount: number = 0;
+upgrader.textContent = "upgrade (cost 10 coffees)";
+upgrader.addEventListener("click", () => {
+  coffeeCount -= 10;
+  if (!upgraderCount) {
+    requestAnimationFrame(continuousCoffeeGrowth);
+  }
+  upgraderCountDisplay.textContent = `upgrades: ${++upgraderCount}`;
+  updateButton();
+});
+function updateButton() {
+  upgrader.disabled = coffeeCount < 10;
+}
+updateButton();
+app.append(upgrader);
+app.append(upgraderCountDisplay);
