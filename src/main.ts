@@ -52,103 +52,68 @@ function increment(amount: number): void {
   update();
 }
 
-// upgrader
-class BaseUpgrade {
-  private _name: string;
-  private _cost: number;
-  private _efficiency: number;
-  private _button: HTMLButtonElement;
-  private _display: HTMLDivElement;
-  upgradesBought: number;
-
-  constructor(name: string, baseCost: number, efficiency: number) {
-    this._name = name;
-    this._cost = baseCost;
-    this._efficiency = efficiency;
-    this.upgradesBought = 0;
-    this._button = document.createElement("button");
-    this._button.addEventListener("click", () => {
-      this.buyUpgrade();
-    });
-    this.updateButton();
-    this._display = document.createElement("div");
-    this.updateDisplay();
-  }
-
-  get name(): string {
-    return this._name;
-  }
-
-  get cost(): number {
-    return this._cost;
-  }
-
-  get efficency(): number {
-    return this._efficiency;
-  }
-
-  get button(): HTMLButtonElement {
-    return this._button;
-  }
-
-  get display(): HTMLDivElement {
-    return this._display;
-  }
-
-  set buttonText(text: string) {
-    this._button.textContent = text;
-  }
-
-  buyUpgrade(): void {
-    currencyCount -= this._cost;
-    this.upgradesBought++;
-    this._cost *= 1.15;
-    updateRate(this.efficency);
-    this.updateButton();
-    this.updateDisplay();
-  }
-
-  updateButton(): void {
-    this.buttonText = `${this._name} (cost ${this._cost.toFixed(2)} lyztes)`;
-    this._button.disabled = currencyCount < this._cost;
-  }
-
-  updateDisplay(): void {
-    this._display.textContent = `${this.name}: ${this.upgradesBought}`;
-  }
-}
-
 // items
 interface Item {
   name: string;
   cost: number;
   efficiency: number;
+  button: HTMLButtonElement;
+  display: HTMLDivElement;
+  numBought: number;
 }
 
 const availableItems: Item[] = [
-  { name: "pots", cost: 10, efficiency: 0.1 },
-  { name: "gardens", cost: 100, efficiency: 2 },
-  { name: "greenhouses", cost: 1000, efficiency: 50 },
+  {
+    name: "pots",
+    cost: 10,
+    efficiency: 0.1,
+    button: document.createElement("button"),
+    display: document.createElement("div"),
+    numBought: 0,
+  },
+  {
+    name: "gardens",
+    cost: 100,
+    efficiency: 2,
+    button: document.createElement("button"),
+    display: document.createElement("div"),
+    numBought: 0,
+  },
+  {
+    name: "greenhouses",
+    cost: 1000,
+    efficiency: 50,
+    button: document.createElement("button"),
+    display: document.createElement("div"),
+    numBought: 0,
+  },
 ];
 
-function createItem(itemList: Item[]): BaseUpgrade[] {
-  const upgrades: BaseUpgrade[] = [];
+function createItems(itemList: Item[]): void {
   for (const item of itemList) {
-    upgrades.push(new BaseUpgrade(item.name, item.cost, item.efficiency));
-  }
-  for (const item of upgrades) {
+    item.button.addEventListener("click", () => {
+      purchase(item);
+    });
     app.append(item.button);
     app.append(item.display);
   }
-  return upgrades;
+}
+createItems(availableItems);
+
+function purchase(item: Item): void {
+  currencyCount -= item.cost;
+  item.numBought++;
+  item.cost *= 1.15;
+  updateRate(item.efficiency);
+  update();
 }
 
-const upgrades: BaseUpgrade[] = createItem(availableItems);
-
 function update(): void {
-  if (!upgrades) return;
-  for (const upgrade of upgrades) {
-    upgrade.updateButton();
+  for (const item of availableItems) {
+    item.button.textContent = `${item.name} (cost ${item.cost.toFixed(2)} lyztes)`;
+    item.button.disabled = currencyCount < item.cost;
+
+    item.display.textContent = `${item.name}: ${item.numBought}`;
   }
 }
 
