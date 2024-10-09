@@ -53,16 +53,7 @@ function increment(amount: number): void {
 }
 
 // upgrader
-interface Upgrade {
-  name: string;
-  cost: number;
-  efficency: number; // in units per second
-  button: HTMLButtonElement;
-  display: HTMLDivElement;
-  upgradesBought: number;
-}
-
-class BaseUpgrade implements Upgrade {
+class BaseUpgrade {
   private _name: string;
   private _cost: number;
   private _efficiency: number;
@@ -127,26 +118,45 @@ class BaseUpgrade implements Upgrade {
   }
 }
 
+// items
+interface Item {
+  name: string;
+  cost: number;
+  efficiency: number;
+}
+
+const availableItems: Item[] = [
+  { name: "pots", cost: 10, efficiency: 0.1 },
+  { name: "gardens", cost: 100, efficiency: 2 },
+  { name: "greenhouses", cost: 1000, efficiency: 50 },
+];
+
+function createItem(itemList: Item[]): BaseUpgrade[] {
+  const upgrades: BaseUpgrade[] = [];
+  for (const item of itemList) {
+    upgrades.push(new BaseUpgrade(item.name, item.cost, item.efficiency));
+  }
+  for (const item of upgrades) {
+    app.append(item.button);
+    app.append(item.display);
+  }
+  return upgrades;
+}
+
+const upgrades: BaseUpgrade[] = createItem(availableItems);
+
+function update(): void {
+  if (!upgrades) return;
+  for (const upgrade of upgrades) {
+    upgrade.updateButton();
+  }
+}
+
+// rate display
 let rate: number = 0;
 function updateRate(amount: number): void {
   rate += amount;
   rateDisplay.textContent = `rate: ${rate.toFixed(1)} lyztes per second`;
-}
-
-const upgradeA: BaseUpgrade = new BaseUpgrade("pots", 10, 0.1);
-app.append(upgradeA.button);
-app.append(upgradeA.display);
-const upgradeB: BaseUpgrade = new BaseUpgrade("gardens", 100, 2);
-app.append(upgradeB.button);
-app.append(upgradeB.display);
-const upgradeC: BaseUpgrade = new BaseUpgrade("greenhouses", 1000, 50);
-app.append(upgradeC.button);
-app.append(upgradeC.display);
-
-function update(): void {
-  upgradeA.updateButton();
-  upgradeB.updateButton();
-  upgradeC.updateButton();
 }
 
 const rateDisplay: HTMLDivElement = document.createElement("div");
