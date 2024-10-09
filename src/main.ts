@@ -55,47 +55,76 @@ function increment(amount: number): void {
 // items
 interface Item {
   name: string;
+  description: string;
   cost: number;
   efficiency: number;
-  button: HTMLButtonElement;
-  display: HTMLDivElement;
+  display?: {
+    button: HTMLButtonElement;
+    description: HTMLDivElement;
+    cost: HTMLDivElement;
+  };
   numBought: number;
 }
 
 const availableItems: Item[] = [
   {
-    name: "pots",
+    name: "fertilizer",
+    description: "faster, faster",
     cost: 10,
     efficiency: 0.1,
-    button: document.createElement("button"),
-    display: document.createElement("div"),
+    numBought: 0,
+  },
+  {
+    name: "clouds",
+    description: "finally, some rain",
+    cost: 10,
+    efficiency: 1,
+    numBought: 0,
+  },
+  {
+    name: "pots",
+    description: "and another one",
+    cost: 25,
+    efficiency: 1,
     numBought: 0,
   },
   {
     name: "gardens",
+    description: "slowly lighting up the sky",
     cost: 100,
-    efficiency: 2,
-    button: document.createElement("button"),
-    display: document.createElement("div"),
+    efficiency: 5,
     numBought: 0,
   },
   {
     name: "greenhouses",
+    description: "a little bit of the cosmos",
     cost: 1000,
     efficiency: 50,
-    button: document.createElement("button"),
-    display: document.createElement("div"),
     numBought: 0,
   },
 ];
 
 function createItems(itemList: Item[]): void {
   for (const item of itemList) {
-    item.button.addEventListener("click", () => {
+    // create display elements
+    item.display = {
+      button: document.createElement("button"),
+      description: document.createElement("div"),
+      cost: document.createElement("div"),
+    };
+
+    // link purchase of item
+    item.display.button.addEventListener("click", () => {
       purchase(item);
     });
-    app.append(item.button);
-    app.append(item.display);
+
+    // input description
+    item.display.description.textContent = item.description;
+
+    // add all display items to the interface
+    for (const element of Object.values(item.display)) {
+      app.append(element);
+    }
   }
 }
 createItems(availableItems);
@@ -110,10 +139,12 @@ function purchase(item: Item): void {
 
 function update(): void {
   for (const item of availableItems) {
-    item.button.textContent = `${item.name} (cost ${item.cost.toFixed(2)} lyztes)`;
-    item.button.disabled = currencyCount < item.cost;
+    if (!item.display) continue;
 
-    item.display.textContent = `${item.name}: ${item.numBought}`;
+    item.display.button.textContent = `${item.name} (cost ${item.cost.toFixed(2)} lyztes)`;
+    item.display.button.disabled = currencyCount < item.cost;
+
+    item.display.cost.textContent = `${item.name}: ${item.numBought}`;
   }
 }
 
