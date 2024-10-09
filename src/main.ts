@@ -11,41 +11,44 @@ app.append(header);
 
 // clicker button
 const clicker: HTMLButtonElement = document.createElement("button");
-clicker.textContent = "☕"; // coffee emoji (it's just small)
+const clickerImg: HTMLImageElement = document.createElement("img");
+clickerImg.src = "assets/lyzte.png";
+clickerImg.width = clickerImg.height = 100;
 clicker.addEventListener("click", () => {
-  incrementCoffeeCount(1);
+  increment(1);
 });
 app.append(clicker);
+clicker.append(clickerImg);
 
 // coffee counter
 const counter: HTMLDivElement = document.createElement("div");
-let coffeeCount: number = 0;
-counter.textContent = `${coffeeCount.toFixed(2)} coffees`;
+let currencyCount: number = 0;
+counter.textContent = `${currencyCount.toFixed(2)} lyztes`;
 app.append(counter);
 
 // automatic incrementer
 let lastTimeStamp: number;
-function continuousCoffeeGrowth(): void {
+function continuousGrowth(): void {
   // first run
   if (lastTimeStamp === undefined) {
     lastTimeStamp = performance.now();
-    requestAnimationFrame(continuousCoffeeGrowth);
+    requestAnimationFrame(continuousGrowth);
     return;
   }
 
   // looping
-  requestAnimationFrame(continuousCoffeeGrowth);
+  requestAnimationFrame(continuousGrowth);
 
   const currentTimeStamp: number = performance.now();
   const secElapsed: number = (currentTimeStamp - lastTimeStamp) / 1000;
-  incrementCoffeeCount(secElapsed * rate);
+  increment(secElapsed * rate);
   lastTimeStamp = currentTimeStamp;
 }
-requestAnimationFrame(continuousCoffeeGrowth);
+requestAnimationFrame(continuousGrowth);
 
-function incrementCoffeeCount(amount: number): void {
-  coffeeCount += amount;
-  counter.textContent = `${coffeeCount.toFixed(2)} coffees`;
+function increment(amount: number): void {
+  currencyCount += amount;
+  counter.textContent = `${currencyCount.toFixed(2)} lyztes`;
   update();
 }
 
@@ -106,7 +109,7 @@ class BaseUpgrade implements Upgrade {
   }
 
   buyUpgrade(): void {
-    coffeeCount -= this._cost;
+    currencyCount -= this._cost;
     this.upgradesBought++;
     this._cost *= 1.15;
     updateRate(this.efficency);
@@ -115,8 +118,8 @@ class BaseUpgrade implements Upgrade {
   }
 
   updateButton(): void {
-    this.buttonText = `${this._name} (cost ${this._cost.toFixed(2)} coffees)`;
-    this._button.disabled = coffeeCount < this._cost;
+    this.buttonText = `${this._name} (cost ${this._cost.toFixed(2)} lyztes)`;
+    this._button.disabled = currencyCount < this._cost;
   }
 
   updateDisplay(): void {
@@ -127,16 +130,16 @@ class BaseUpgrade implements Upgrade {
 let rate: number = 0;
 function updateRate(amount: number): void {
   rate += amount;
-  rateDisplay.textContent = `rate: ${rate.toFixed(1)} coffees per second`;
+  rateDisplay.textContent = `rate: ${rate.toFixed(1)} lyztes per second`;
 }
 
-const upgradeA: BaseUpgrade = new BaseUpgrade("upgradeA", 10, 0.1);
+const upgradeA: BaseUpgrade = new BaseUpgrade("pots", 10, 0.1);
 app.append(upgradeA.button);
 app.append(upgradeA.display);
-const upgradeB: BaseUpgrade = new BaseUpgrade("upgradeB", 100, 2);
+const upgradeB: BaseUpgrade = new BaseUpgrade("gardens", 100, 2);
 app.append(upgradeB.button);
 app.append(upgradeB.display);
-const upgradeC: BaseUpgrade = new BaseUpgrade("upgradeC", 1000, 50);
+const upgradeC: BaseUpgrade = new BaseUpgrade("greenhouses", 1000, 50);
 app.append(upgradeC.button);
 app.append(upgradeC.display);
 
@@ -147,6 +150,6 @@ function update(): void {
 }
 
 const rateDisplay: HTMLDivElement = document.createElement("div");
-rateDisplay.textContent = `rate: ${rate.toFixed(1)} coffees per second`;
+rateDisplay.textContent = `rate: ${rate.toFixed(1)} lyztes per second`;
 rateDisplay.style.marginTop = "30px";
 app.append(rateDisplay);
