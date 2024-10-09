@@ -20,7 +20,7 @@ app.append(clicker);
 // coffee counter
 const counter: HTMLDivElement = document.createElement("div");
 let coffeeCount: number = 0;
-counter.textContent = `${coffeeCount} coffees`;
+counter.textContent = `${coffeeCount.toFixed(2)} coffees`;
 app.append(counter);
 
 // automatic incrementer
@@ -45,7 +45,7 @@ requestAnimationFrame(continuousCoffeeGrowth);
 
 function incrementCoffeeCount(amount: number): void {
   coffeeCount += amount;
-  counter.textContent = `${Math.floor(coffeeCount)} coffees`;
+  counter.textContent = `${coffeeCount.toFixed(2)} coffees`;
   update();
 }
 
@@ -108,13 +108,14 @@ class BaseUpgrade implements Upgrade {
   buyUpgrade(): void {
     coffeeCount -= this._cost;
     this.upgradesBought++;
+    this._cost *= 1.15;
     updateRate(this.efficency);
     this.updateButton();
     this.updateDisplay();
   }
 
   updateButton(): void {
-    this.buttonText = `${this._name} (cost ${this._cost} coffees)`;
+    this.buttonText = `${this._name} (cost ${this._cost.toFixed(2)} coffees)`;
     this._button.disabled = coffeeCount < this._cost;
   }
 
