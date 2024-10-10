@@ -1,6 +1,7 @@
 import { Garden, ItemData, clicker, counter, rateDisplay } from "./itemshop.ts";
 import { addTab, createSidebar, createTab, Sidebar, Tab } from "./sidebar.ts";
 import "./sidebar.css";
+import { img } from "./images.ts";
 
 // garden /////////////////////////////////////////////////////////////////////
 
@@ -15,7 +16,7 @@ const upgrades: ItemData[] = [
   {
     name: "fertilizer",
     description: "faster, faster",
-    imgSrc: "./assets/lyzte.png",
+    imgSrc: img.lzyte,
     cost: 10,
     efficiency: 0.1,
     numBought: 0,
@@ -23,7 +24,7 @@ const upgrades: ItemData[] = [
   {
     name: "clouds",
     description: "finally, some rain",
-    imgSrc: "./assets/lyzte.png",
+    imgSrc: img.lzyte,
     cost: 20,
     efficiency: 0.5,
     numBought: 0,
@@ -31,7 +32,7 @@ const upgrades: ItemData[] = [
   {
     name: "pot",
     description: "and another one",
-    imgSrc: "./assets/lyzte.png",
+    imgSrc: img.lzyte,
     cost: 50,
     efficiency: 1,
     numBought: 0,
@@ -39,7 +40,7 @@ const upgrades: ItemData[] = [
   {
     name: "garden",
     description: "slowly lighting up the sky",
-    imgSrc: "./assets/lyzte.png",
+    imgSrc: img.lzyte,
     cost: 100,
     efficiency: 7,
     numBought: 0,
@@ -47,7 +48,7 @@ const upgrades: ItemData[] = [
   {
     name: "greenhouse",
     description: "a little bit of the cosmos",
-    imgSrc: "./assets/lyzte.png",
+    imgSrc: img.lzyte,
     cost: 1000,
     efficiency: 100,
     numBought: 0,

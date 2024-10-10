@@ -1,10 +1,12 @@
+import { img } from "./images";
+
 // clicker button
 /**
  * main clicker button that the player clicks on
  */
 export const clicker: HTMLButtonElement = document.createElement("button");
 const clickerImg: HTMLImageElement = document.createElement("img");
-clickerImg.src = "./assets/lyzte.png";
+clickerImg.src = img.lzyte;
 clickerImg.width = clickerImg.height = 100;
 clicker.addEventListener("click", () => {
   increment(1);
