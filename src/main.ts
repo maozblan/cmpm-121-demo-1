@@ -1,4 +1,5 @@
 import "./style.css";
+import "./sidebar.css";
 import {
   Item,
   ItemData,
@@ -8,6 +9,7 @@ import {
   createItem,
   setItemList,
 } from "./shop.ts";
+import { addTab, createSidebar, createTab, Sidebar, Tab } from "./sidebar.ts";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 
@@ -18,8 +20,17 @@ const header = document.createElement("h1");
 header.innerHTML = gameName;
 app.append(header);
 
-app.append(clicker);
-app.append(counter);
+const graphics: HTMLDivElement = document.createElement("div");
+app.append(graphics);
+
+const sidebar: Sidebar = createSidebar("sidebar");
+app.append(sidebar.sidebar);
+
+const shop: Tab = createTab("shop", "shop.png");
+addTab(sidebar, shop);
+
+shop.content.append(clicker);
+shop.content.append(counter);
 
 const upgrades: ItemData[] = [
   {
@@ -64,13 +75,13 @@ const upgrades: ItemData[] = [
   upgrades.forEach((upgrade: ItemData) => {
     const temp: Item = createItem(upgrade);
 
-    // add to application
+    // add to shop.contentlication
     for (const item of Object.values(temp.display)) {
-      app.append(item);
+      shop.content.append(item);
     }
     itemList.push(temp);
   });
   setItemList(itemList);
 })();
 
-app.append(rateDisplay);
+shop.content.append(rateDisplay);

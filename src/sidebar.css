@@ -1,0 +1,32 @@
+.sidebar {
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  min-width: 750px;
+  margin-left: auto;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.sidebarContent,
+.tab.open {
+  background-color: #151515;
+}
+
+.sidebarContent {
+  width: 0px;
+  padding: 0px;
+  overflow-x: hidden;
+}
+.sidebarContent.open {
+  width: 30vw;
+  min-width: 700px;
+  padding: 1em;
+}
+.tab {
+  padding: 1em;
+  border-bottom: 1px solid #4f4f4f;
+  background-color: #343434;
+  border-radius: 7px 0 0 7px;
+  cursor: pointer;
+}
