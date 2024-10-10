@@ -72,6 +72,7 @@ export interface Item extends ItemData {
     button: HTMLButtonElement;
     display: HTMLDivElement;
   };
+  numBought: number;
 }
 
 /**
@@ -81,8 +82,8 @@ export interface ItemData {
   name: string;
   description: string;
   cost: number;
-  numBought: number;
   efficiency?: number;
+  batchSize?: number;
   imgSrc: string;
 }
 
@@ -125,6 +126,7 @@ class itemShop {
         button: document.createElement("button"),
         display: document.createElement("div"),
       },
+      numBought: 0,
     };
 
     // link purchase of item
@@ -157,12 +159,23 @@ export class Shop extends itemShop {
     super(itemList);
   }
 
+  purchase(item: Item): void {
+    currencyCount -= item.cost;
+    item.cost *= 1.5;
+    item.numBought += item.batchSize ? item.batchSize : 1;
+  }
+
+  use(item: Item, amount: number): void {
+    if (item.numBought < amount) return;
+    item.numBought -= amount;
+  }
+
   update() {
     for (const item of this.items) {
-      item.display.button.textContent = `purchase (cost ${item.cost.toFixed(2)} lyztes)`;
+      item.display.button.textContent = `price: ${item.cost.toFixed(2)}`;
       item.display.button.disabled = currencyCount < item.cost;
 
-      item.display.display.textContent = `currently own ${item.numBought} ${item.name}s`;
+      item.display.display.textContent = `${item.numBought} ${item.name}s in inventory`;
     }
   }
 }
@@ -177,7 +190,7 @@ export class Garden extends itemShop {
       item.display.button.textContent = `purchase\n(${item.cost.toFixed(2)} lyztes)`;
       item.display.button.disabled = currencyCount < item.cost;
 
-      item.display.display.textContent = `${item.name} bought: ${item.numBought}`;
+      item.display.display.textContent = `${item.name}s bought: ${item.numBought}`;
     }
   }
 }

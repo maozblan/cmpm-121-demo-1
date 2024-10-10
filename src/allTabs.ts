@@ -1,4 +1,11 @@
-import { Garden, ItemData, clicker, counter, rateDisplay } from "./itemshop.ts";
+import {
+  Garden,
+  ItemData,
+  Shop,
+  clicker,
+  counter,
+  rateDisplay,
+} from "./itemshop.ts";
 import { addTab, createSidebar, createTab, Sidebar, Tab } from "./sidebar.ts";
 import "./sidebar.css";
 import { img } from "./images.ts";
@@ -12,6 +19,8 @@ addTab(sidebar, garden);
 garden.content.append(clicker);
 garden.content.append(counter);
 
+garden.content.append(rateDisplay);
+
 const upgrades: ItemData[] = [
   {
     name: "fertilizer",
@@ -19,15 +28,13 @@ const upgrades: ItemData[] = [
     imgSrc: img.lyzte,
     cost: 10,
     efficiency: 0.1,
-    numBought: 0,
   },
   {
-    name: "clouds",
+    name: "cloud",
     description: "finally, some rain",
     imgSrc: img.lyzte,
     cost: 20,
     efficiency: 0.5,
-    numBought: 0,
   },
   {
     name: "pot",
@@ -35,7 +42,6 @@ const upgrades: ItemData[] = [
     imgSrc: img.lyzte,
     cost: 50,
     efficiency: 1,
-    numBought: 0,
   },
   {
     name: "garden",
@@ -43,7 +49,6 @@ const upgrades: ItemData[] = [
     imgSrc: img.lyzte,
     cost: 100,
     efficiency: 7,
-    numBought: 0,
   },
   {
     name: "greenhouse",
@@ -51,7 +56,6 @@ const upgrades: ItemData[] = [
     imgSrc: img.lyzte,
     cost: 1000,
     efficiency: 100,
-    numBought: 0,
   },
 ];
 
@@ -62,14 +66,83 @@ gardenShopDisplay.classList.add("itemShop");
 
 garden.content.append(gardenShopDisplay);
 
-garden.content.append(rateDisplay);
-
 // shop ///////////////////////////////////////////////////////////////////////
 
-// const shop: Tab = createTab("shop", "shop.png");
+const shop: Tab = createTab("shop", "shop.png");
+const shopTitle: HTMLHeadingElement = document.createElement("h2");
+shopTitle.textContent = "item shop";
+shop.content.append(shopTitle);
+addTab(sidebar, shop);
 
-// const shopItems: ItemData[] = [
-//   {
-//     name: "
-//   }
-// ];
+const shopItems: ItemData[] = [
+  {
+    name: "coffee bean",
+    description: "the foundation of everything",
+    imgSrc: img.lyzte,
+    cost: 1,
+    batchSize: 15,
+  },
+  {
+    name: "milk",
+    description: "fresh from the milky way",
+    imgSrc: img.lyzte,
+    cost: 5,
+    batchSize: 5,
+  },
+  {
+    name: "sugar",
+    description: "the sweetest thing",
+    imgSrc: img.lyzte,
+    cost: 5,
+    batchSize: 5,
+  },
+  {
+    name: "cynnamon",
+    description: "a little bit of spice",
+    imgSrc: img.lyzte,
+    cost: 10,
+    batchSize: 10,
+  },
+  {
+    name: "xin",
+    description: "something new, something special",
+    imgSrc: img.lyzte,
+    cost: 10,
+    batchSize: 10,
+  },
+  {
+    name: "long berry",
+    description: "the bitter taste of longing",
+    imgSrc: img.lyzte,
+    cost: 10,
+    batchSize: 10,
+  },
+  {
+    name: "ramfoam",
+    description: "nostalgia and memories",
+    imgSrc: img.lyzte,
+    cost: 300,
+    batchSize: 10,
+  },
+  {
+    name: "mint leaves",
+    description: "a breath of fresh air",
+    imgSrc: img.lyzte,
+    cost: 300,
+    batchSize: 10,
+  },
+  {
+    name: "starfruit",
+    description: "a peek into history",
+    imgSrc: img.lyzte,
+    cost: 300,
+    batchSize: 10,
+  },
+];
+
+const itemShop = new Shop(shopItems);
+const itemShopDisplay: HTMLDivElement = document.createElement("div");
+itemShop.displayItems(itemShopDisplay);
+itemShopDisplay.classList.add("itemShop");
+
+shop.content.append(itemShopDisplay);
