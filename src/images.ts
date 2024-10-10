@@ -1,3 +1,3 @@
-import lzyte from "../assets/lyzte.png";
+import lyzte from "../assets/lyzte.png";
 
-export const img = { lzyte };
+export const img = { lyzte: lyzte };
