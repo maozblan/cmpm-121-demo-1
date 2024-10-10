@@ -14,3 +14,4 @@ const graphics: HTMLDivElement = document.createElement("div");
 app.append(graphics);
 
 app.append(sidebar.sidebar);
+document.getElementById("garden")?.click();

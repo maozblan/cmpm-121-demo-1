@@ -8,9 +8,9 @@ export interface Sidebar {
 
 export interface Tab {
   id: string;
-  tab: HTMLDivElement; // holds the
-  icon: HTMLImageElement;
-  content: HTMLDivElement;
+  tab: HTMLDivElement; // holds the clickable icon
+  icon: HTMLImageElement; // icon image
+  content: HTMLDivElement; // holds the content that goes in sidebar
 }
 
 export function createSidebar(id: string): Sidebar {

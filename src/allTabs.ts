@@ -1,12 +1,4 @@
-import {
-  Item,
-  ItemData,
-  clicker,
-  counter,
-  rateDisplay,
-  createItem,
-  setItemList,
-} from "./shop.ts";
+import { Garden, ItemData, clicker, counter, rateDisplay } from "./itemshop.ts";
 import { addTab, createSidebar, createTab, Sidebar, Tab } from "./sidebar.ts";
 import "./sidebar.css";
 
@@ -23,6 +15,7 @@ const upgrades: ItemData[] = [
   {
     name: "fertilizer",
     description: "faster, faster",
+    imgSrc: "./assets/lyzte.png",
     cost: 10,
     efficiency: 0.1,
     numBought: 0,
@@ -30,47 +23,52 @@ const upgrades: ItemData[] = [
   {
     name: "clouds",
     description: "finally, some rain",
+    imgSrc: "./assets/lyzte.png",
     cost: 20,
     efficiency: 0.5,
     numBought: 0,
   },
   {
-    name: "pots",
+    name: "pot",
     description: "and another one",
+    imgSrc: "./assets/lyzte.png",
     cost: 50,
     efficiency: 1,
     numBought: 0,
   },
   {
-    name: "gardens",
+    name: "garden",
     description: "slowly lighting up the sky",
+    imgSrc: "./assets/lyzte.png",
     cost: 100,
     efficiency: 7,
     numBought: 0,
   },
   {
-    name: "greenhouses",
+    name: "greenhouse",
     description: "a little bit of the cosmos",
+    imgSrc: "./assets/lyzte.png",
     cost: 1000,
     efficiency: 100,
     numBought: 0,
   },
 ];
 
-((): void => {
-  const itemList: Item[] = [];
-  upgrades.forEach((upgrade: ItemData) => {
-    const temp: Item = createItem(upgrade);
+const gardenShop = new Garden(upgrades);
+const gardenShopDisplay: HTMLDivElement = document.createElement("div");
+gardenShop.displayItems(gardenShopDisplay);
+gardenShopDisplay.classList.add("itemShop");
 
-    // add to shop.contentlication
-    for (const item of Object.values(temp.display)) {
-      garden.content.append(item);
-    }
-    itemList.push(temp);
-  });
-  setItemList(itemList);
-})();
+garden.content.append(gardenShopDisplay);
 
 garden.content.append(rateDisplay);
 
-// garden /////////////////////////////////////////////////////////////////////
+// shop ///////////////////////////////////////////////////////////////////////
+
+// const shop: Tab = createTab("shop", "shop.png");
+
+// const shopItems: ItemData[] = [
+//   {
+//     name: "
+//   }
+// ];

@@ -30,3 +30,19 @@
   border-radius: 7px 0 0 7px;
   cursor: pointer;
 }
+
+.item {
+  width: 9vw;
+  box-sizing: content-box;
+  padding: 1em;
+}
+.item img {
+  width: 100%;
+  height: auto;
+}
+.itemShop {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
