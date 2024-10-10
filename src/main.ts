@@ -1,4 +1,13 @@
 import "./style.css";
+import {
+  Item,
+  ItemData,
+  clicker,
+  counter,
+  rateDisplay,
+  createItem,
+  setItemList,
+} from "./shop.ts";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 
@@ -9,64 +18,10 @@ const header = document.createElement("h1");
 header.innerHTML = gameName;
 app.append(header);
 
-// clicker button
-const clicker: HTMLButtonElement = document.createElement("button");
-const clickerImg: HTMLImageElement = document.createElement("img");
-clickerImg.src = "assets/lyzte.png";
-clickerImg.width = clickerImg.height = 100;
-clicker.addEventListener("click", () => {
-  increment(1);
-});
 app.append(clicker);
-clicker.append(clickerImg);
-
-// coffee counter
-const counter: HTMLDivElement = document.createElement("div");
-let currencyCount: number = 0;
-counter.textContent = `${currencyCount.toFixed(2)} lyztes`;
 app.append(counter);
 
-// automatic incrementer
-let lastTimeStamp: number;
-function continuousGrowth(): void {
-  // first run
-  if (lastTimeStamp === undefined) {
-    lastTimeStamp = performance.now();
-    requestAnimationFrame(continuousGrowth);
-    return;
-  }
-
-  // looping
-  requestAnimationFrame(continuousGrowth);
-
-  const currentTimeStamp: number = performance.now();
-  const secElapsed: number = (currentTimeStamp - lastTimeStamp) / 1000;
-  increment(secElapsed * rate);
-  lastTimeStamp = currentTimeStamp;
-}
-requestAnimationFrame(continuousGrowth);
-
-function increment(amount: number): void {
-  currencyCount += amount;
-  counter.textContent = `${currencyCount.toFixed(2)} lyztes`;
-  update();
-}
-
-// items
-interface Item {
-  name: string;
-  description: string;
-  cost: number;
-  efficiency: number;
-  display?: {
-    button: HTMLButtonElement;
-    description: HTMLDivElement;
-    cost: HTMLDivElement;
-  };
-  numBought: number;
-}
-
-const availableItems: Item[] = [
+const upgrades: ItemData[] = [
   {
     name: "fertilizer",
     description: "faster, faster",
@@ -104,58 +59,18 @@ const availableItems: Item[] = [
   },
 ];
 
-function createItems(itemList: Item[]): void {
-  for (const item of itemList) {
-    // create display elements
-    item.display = {
-      button: document.createElement("button"),
-      description: document.createElement("div"),
-      cost: document.createElement("div"),
-    };
+((): void => {
+  const itemList: Item[] = [];
+  upgrades.forEach((upgrade: ItemData) => {
+    const temp: Item = createItem(upgrade);
 
-    // link purchase of item
-    item.display.button.addEventListener("click", () => {
-      purchase(item);
-    });
-
-    // input description
-    item.display.description.textContent = item.description;
-
-    // add all display items to the interface
-    for (const element of Object.values(item.display)) {
-      app.append(element);
+    // add to application
+    for (const item of Object.values(temp.display)) {
+      app.append(item);
     }
-  }
-}
-createItems(availableItems);
+    itemList.push(temp);
+  });
+  setItemList(itemList);
+})();
 
-function purchase(item: Item): void {
-  currencyCount -= item.cost;
-  item.numBought++;
-  item.cost *= 1.15;
-  updateRate(item.efficiency);
-  update();
-}
-
-function update(): void {
-  for (const item of availableItems) {
-    if (!item.display) continue;
-
-    item.display.button.textContent = `${item.name} (cost ${item.cost.toFixed(2)} lyztes)`;
-    item.display.button.disabled = currencyCount < item.cost;
-
-    item.display.cost.textContent = `${item.name}: ${item.numBought}`;
-  }
-}
-
-// rate display
-let rate: number = 0;
-function updateRate(amount: number): void {
-  rate += amount;
-  rateDisplay.textContent = `rate: ${rate.toFixed(1)} lyztes per second`;
-}
-
-const rateDisplay: HTMLDivElement = document.createElement("div");
-rateDisplay.textContent = `rate: ${rate.toFixed(1)} lyztes per second`;
-rateDisplay.style.marginTop = "30px";
 app.append(rateDisplay);
