@@ -61,3 +61,6 @@
   justify-content: space-evenly;
   flex-wrap: wrap;
 }
+.sidebar h2 {
+  margin-top: 0;
+}

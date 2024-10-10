@@ -17,7 +17,7 @@ const garden: Tab = createTab("garden", "garden.png");
 addTab(sidebar, garden);
 
 garden.content.append(clicker);
-garden.content.append(counter);
+garden.content.append(counter());
 
 garden.content.append(rateDisplay);
 
@@ -72,6 +72,7 @@ const shop: Tab = createTab("shop", "shop.png");
 const shopTitle: HTMLHeadingElement = document.createElement("h2");
 shopTitle.textContent = "item shop";
 shop.content.append(shopTitle);
+shop.content.append(counter());
 addTab(sidebar, shop);
 
 const shopItems: ItemData[] = [

@@ -14,12 +14,17 @@ clicker.addEventListener("click", () => {
 clicker.append(clickerImg);
 
 // coffee counter
+let currencyCount: number = 0;
+const counters: HTMLDivElement[] = [];
 /**
  * current count of currency
  */
-export const counter: HTMLDivElement = document.createElement("div");
-let currencyCount: number = 0;
-counter.textContent = `${currencyCount.toFixed(2)} lyztes`;
+export function counter(): HTMLDivElement {
+  const counter: HTMLDivElement = document.createElement("div");
+  counter.textContent = `${currencyCount.toFixed(2)} lyztes`;
+  counters.push(counter);
+  return counter;
+}
 
 // automatic incrementer
 let lastTimeStamp: number;
@@ -43,7 +48,9 @@ requestAnimationFrame(continuousGrowth);
 
 function increment(amount: number): void {
   currencyCount += amount;
-  counter.textContent = `${currencyCount.toFixed(2)} lyztes`;
+  counters.forEach((counter: HTMLDivElement) => {
+    counter.textContent = `${currencyCount.toFixed(2)} lyztes`;
+  });
 }
 
 // rate display
