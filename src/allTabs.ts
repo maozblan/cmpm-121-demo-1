@@ -21,7 +21,8 @@ import {
 // garden /////////////////////////////////////////////////////////////////////
 
 export const sidebar: Sidebar = createSidebar("sidebar");
-const gardenTAB: Tab = createTab("garden", "garden.png");
+const gardenTAB: Tab = createTab("garden", img.gardenIcon);
+
 addTab(sidebar, gardenTAB);
 
 gardenTAB.content.append(clicker);
@@ -33,35 +34,35 @@ const upgrades: ItemData[] = [
   {
     name: "fertilizer",
     description: "faster, faster",
-    imgSrc: img.lyzte,
+    imgSrc: img.fertilizer,
     cost: 10,
     efficiency: 0.1,
   },
   {
     name: "cloud",
     description: "finally, some rain",
-    imgSrc: img.lyzte,
+    imgSrc: img.cloud,
     cost: 20,
     efficiency: 0.5,
   },
   {
     name: "pot",
     description: "and another one",
-    imgSrc: img.lyzte,
+    imgSrc: img.pot,
     cost: 50,
     efficiency: 1,
   },
   {
     name: "garden",
     description: "slowly lighting up the sky",
-    imgSrc: img.lyzte,
+    imgSrc: img.garden,
     cost: 100,
     efficiency: 7,
   },
   {
     name: "greenhouse",
     description: "a little bit of the cosmos",
-    imgSrc: img.lyzte,
+    imgSrc: img.greenhouse,
     cost: 1000,
     efficiency: 100,
   },
@@ -76,7 +77,7 @@ gardenTAB.content.append(gardenShopDisplay);
 
 // shop ///////////////////////////////////////////////////////////////////////
 
-const inventoryTAB: Tab = createTab("inventory", "inventory.png");
+const inventoryTAB: Tab = createTab("inventory", img.shopIcon);
 const shopTitle: HTMLHeadingElement = document.createElement("h2");
 shopTitle.textContent = "item shop";
 inventoryTAB.content.append(shopTitle);
@@ -87,63 +88,63 @@ const shopItems: ItemData[] = [
   {
     name: "coffee bean",
     description: "the foundation of everything",
-    imgSrc: img.lyzte,
+    imgSrc: img.coffeeBean,
     cost: 1,
     batchSize: 15,
   },
   {
     name: "milk",
     description: "fresh from the milky way",
-    imgSrc: img.lyzte,
+    imgSrc: img.milk,
     cost: 5,
     batchSize: 5,
   },
   {
     name: "sugar",
     description: "the sweetest thing",
-    imgSrc: img.lyzte,
+    imgSrc: img.sugar,
     cost: 5,
     batchSize: 5,
   },
   {
     name: "cynnamon",
     description: "a little bit of spice",
-    imgSrc: img.lyzte,
+    imgSrc: img.cynnamon,
     cost: 10,
     batchSize: 10,
   },
   // {
   //   name: "xin",
   //   description: "something new, something special",
-  //   imgSrc: img.lyzte,
+  //   imgSrc: img.xin,
   //   cost: 10,
   //   batchSize: 10,
   // },
   {
     name: "long berri",
     description: "the bitter taste of longing",
-    imgSrc: img.lyzte,
+    imgSrc: img.longBerri,
     cost: 10,
     batchSize: 10,
   },
   // {
   //   name: "ramfoam",
   //   description: "nostalgia and memories",
-  //   imgSrc: img.lyzte,
+  //   imgSrc: img.ramfoam,
   //   cost: 300,
   //   batchSize: 10,
   // },
   // {
   //   name: "mint leaves",
   //   description: "a breath of fresh air",
-  //   imgSrc: img.lyzte,
+  //   imgSrc: img.mintLeaves,
   //   cost: 300,
   //   batchSize: 10,
   // },
   {
     name: "starfruit",
     description: "a peek into history",
-    imgSrc: img.lyzte,
+    imgSrc: img.starfruit,
     cost: 300,
     batchSize: 10,
   },
@@ -159,7 +160,7 @@ inventoryTAB.content.append(itemShopDisplay);
 
 // menu ///////////////////////////////////////////////////////////////////////
 
-const menuTAB: Tab = createTab("menu", "menu.png");
+const menuTAB: Tab = createTab("menu", img.menuIcon);
 const menuTitle: HTMLHeadingElement = document.createElement("h2");
 menuTitle.textContent = "menu";
 menuTAB.content.append(menuTitle);
@@ -170,13 +171,13 @@ const coffees: Coffee[] = [
   {
     name: "basic coffee",
     description: "like the old days",
-    imgSrc: img.lyzte,
+    imgSrc: img.coffee,
     recipe: [{ item: ingredients["coffee bean"], count: 5 }],
   },
   {
     name: "basic latte",
     description: "swirls of milk",
-    imgSrc: img.lyzte,
+    imgSrc: img.coffee,
     recipe: [
       { item: ingredients["coffee bean"], count: 3 },
       { item: ingredients["milk"], count: 2 },
@@ -185,7 +186,7 @@ const coffees: Coffee[] = [
   {
     name: "basic cappuccino",
     description: "sweetness unmatched",
-    imgSrc: img.lyzte,
+    imgSrc: img.coffee,
     recipe: [
       { item: ingredients["coffee bean"], count: 1 },
       { item: ingredients["sugar"], count: 4 },
@@ -194,7 +195,7 @@ const coffees: Coffee[] = [
   {
     name: "tanget",
     description: "sweet and spicy",
-    imgSrc: img.lyzte,
+    imgSrc: img.coffee,
     recipe: [
       { item: ingredients["coffee bean"], count: 1 },
       { item: ingredients["sugar"], count: 2 },
@@ -204,7 +205,7 @@ const coffees: Coffee[] = [
   // {
   //   name: "cermela latte",
   //   description: "a mountain of foam",
-  //   imgSrc: img.lyzte,
+  //   imgSrc: img.coffee,
   //   recipe: [
   //     { item: ingredients["coffee bean"], count: 2 },
   //     { item: ingredients["sugar"], count: 3 },
@@ -214,7 +215,7 @@ const coffees: Coffee[] = [
   {
     name: "comet coffee",
     description: "chasing the dream",
-    imgSrc: img.lyzte,
+    imgSrc: img.coffee,
     recipe: [
       { item: ingredients["coffee bean"], count: 2 },
       { item: ingredients["milk"], count: 1 },
@@ -232,7 +233,7 @@ menuTAB.content.append(coffeeShop.menuDisplay);
 
 // customers //////////////////////////////////////////////////////////////////
 
-const customerTAB: Tab = createTab("customers", "customers.png");
+const customerTAB: Tab = createTab("customers", img.customersIcon);
 const customersTitle: HTMLHeadingElement = document.createElement("h2");
 customersTitle.textContent = "visitor log";
 customerTAB.content.append(customersTitle);
@@ -240,24 +241,24 @@ customerTAB.content.append(customersTitle);
 addTab(sidebar, customerTAB);
 
 const customerList: Customer[] = [
-  createCustomer("lydon", "am just a simple wanderer", img.lyzte, [
+  createCustomer("lydon", "am just a simple wanderer", img.person, [
     coffeeShop.menuItems["basic coffee"],
   ]),
-  createCustomer("sama", "life is a bit funky sometimes", img.lyzte, [
+  createCustomer("sama", "life is a bit funky sometimes", img.person, [
     coffeeShop.menuItems["basic coffee"],
     coffeeShop.menuItems["basic latte"],
   ]),
-  createCustomer("jakk", "beep boop bop", img.lyzte, [
+  createCustomer("jakk", "beep boop bop", img.person, [
     coffeeShop.menuItems["basic latte"],
   ]),
-  createCustomer("leon", "anything really", img.lyzte, [
+  createCustomer("leon", "anything really", img.person, [
     coffeeShop.menuItems["basic cappuccino"],
     coffeeShop.menuItems["tanget"],
   ]),
-  createCustomer("janet", "perfection is i", img.lyzte, [
+  createCustomer("janet", "perfection is i", img.person, [
     coffeeShop.menuItems["tanget"],
   ]),
-  createCustomer("epoch", "he who tears space apart", img.lyzte, [
+  createCustomer("epoch", "he who tears space apart", img.person, [
     coffeeShop.menuItems["comet coffee"],
   ]),
 ];

@@ -76,7 +76,7 @@ export class Menu {
     warning.classList.add("warning");
     setInterval(() => {
       if (!this.checkIngredients(item) && item.bought) {
-        warning.textContent = "missing ingredients!";
+        warning.textContent = "not enough ingredients!";
         item.available = false;
       } else {
         warning.textContent = "";

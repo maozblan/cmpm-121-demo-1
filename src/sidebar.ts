@@ -34,6 +34,7 @@ export function createTab(id: string, iconPath: string): Tab {
   tab.classList.add("tab");
   const icon = document.createElement("img");
   icon.src = iconPath;
+  tab.append(icon);
   const tabContent = document.createElement("div");
   tabContent.id = `${id}Content`;
   tabContent.classList.add("tabContent");
