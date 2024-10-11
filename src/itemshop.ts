@@ -14,7 +14,10 @@ clicker.addEventListener("click", () => {
 clicker.append(clickerImg);
 
 // coffee counter
-let currencyCount: number = 0;
+export let currencyCount: number = 0;
+export function updateCurrencyCount(amount: number): void {
+  currencyCount += amount;
+}
 const counters: HTMLDivElement[] = [];
 /**
  * current count of currency
@@ -112,7 +115,7 @@ class itemShop {
   }
 
   purchase(item: Item): void {
-    currencyCount -= item.cost;
+    updateCurrencyCount(-item.cost);
     item.numBought++;
     item.cost *= 1.15;
     updateRate(item.efficiency ? item.efficiency : 0);
@@ -167,7 +170,7 @@ export class Shop extends itemShop {
   }
 
   purchase(item: Item): void {
-    currencyCount -= item.cost;
+    updateCurrencyCount(-item.cost);
     item.cost *= 1.5;
     item.numBought += item.batchSize ? item.batchSize : 1;
   }

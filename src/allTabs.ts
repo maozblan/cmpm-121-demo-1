@@ -68,12 +68,12 @@ garden.content.append(gardenShopDisplay);
 
 // shop ///////////////////////////////////////////////////////////////////////
 
-const shop: Tab = createTab("shop", "shop.png");
+const inventory: Tab = createTab("inventory", "inventory.png");
 const shopTitle: HTMLHeadingElement = document.createElement("h2");
 shopTitle.textContent = "item shop";
-shop.content.append(shopTitle);
-shop.content.append(counter());
-addTab(sidebar, shop);
+inventory.content.append(shopTitle);
+inventory.content.append(counter());
+addTab(sidebar, inventory);
 
 const shopItems: ItemData[] = [
   {
@@ -146,4 +146,4 @@ const itemShopDisplay: HTMLDivElement = document.createElement("div");
 itemShop.displayItems(itemShopDisplay);
 itemShopDisplay.classList.add("itemShop");
 
-shop.content.append(itemShopDisplay);
+inventory.content.append(itemShopDisplay);
