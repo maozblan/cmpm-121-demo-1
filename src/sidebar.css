@@ -74,6 +74,8 @@
 .coffee img {
   height: 100%;
   width: auto;
+  margin-right: 1em;
+  margin-left: 1em;
 }
 .coffee {
   height: 10em;
