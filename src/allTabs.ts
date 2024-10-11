@@ -223,3 +223,9 @@ coffees.forEach((coffee: Coffee) => menuObject.addCoffee(coffee));
 
 menu.content.append(menuObject.menuDisplay);
 menu.content.append(menuObject.menuDisplay);
+
+const button: HTMLButtonElement = document.createElement("button");
+button.addEventListener("click", () => {
+  console.log(menuObject.buyCoffee(coffees[0], itemShop));
+});
+menu.content.append(button);

@@ -1,4 +1,4 @@
-import { currencyCount, Item, updateCurrencyCount } from "./itemshop";
+import { currencyCount, Item, Shop, updateCurrencyCount } from "./itemshop";
 
 export interface Coffee {
   name: string;
@@ -16,6 +16,7 @@ interface MenuItem {
   coffee: Coffee;
   content: HTMLDivElement;
   cost: number;
+  available: boolean;
   bought: boolean;
 }
 
@@ -50,6 +51,7 @@ export class Menu {
       coffee: coffee,
       content: div,
       cost: this.menu.length * 125,
+      available: false,
       bought: false,
     };
     this.menu.push(item);
@@ -60,8 +62,10 @@ export class Menu {
     setInterval(() => {
       if (!this.checkIngredients(item) && item.bought) {
         warning.textContent = "missing ingredients!";
+        item.available = false;
       } else {
         warning.textContent = "";
+        item.available = item.bought;
       }
     }, 250);
     div.append(warning);
@@ -86,6 +90,17 @@ export class Menu {
   purchaseRecipe(item: MenuItem): boolean {
     if (currencyCount >= item.cost) {
       updateCurrencyCount(-item.cost);
+      return true;
+    }
+    return false;
+  }
+
+  buyCoffee(coffee: Coffee, shop: Shop): boolean {
+    const item = this.menu.find((item) => item.coffee === coffee);
+    if (item && item.available) {
+      for (const ingredient of item.coffee.recipe) {
+        shop.use(ingredient.item, ingredient.count);
+      }
       return true;
     }
     return false;
