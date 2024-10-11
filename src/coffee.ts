@@ -65,7 +65,7 @@ export class Menu {
     const item: MenuItem = {
       coffee: coffee,
       content: div,
-      cost: this.menu.length * 125,
+      cost: this.menu.length * 75,
       available: false,
       bought: false,
     };
