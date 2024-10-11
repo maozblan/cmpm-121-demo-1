@@ -31,7 +31,7 @@
   padding: 1em;
   background-color: #343434;
   margin-bottom: 0.5em;
-  border-radius: 7px 0 0 7px;
+  border-radius: 0.5em 0 0 0.5em;
   cursor: pointer;
 }
 .tabContent {
@@ -47,7 +47,7 @@
 }
 
 .item {
-  width: 9vw;
+  width: 10em;
   box-sizing: content-box;
   padding: 1em;
 }
@@ -71,8 +71,9 @@
   width: auto;
 }
 .coffee {
-  height: 150px;
+  height: 10em;
   display: flex;
+  margin-bottom: 1em;
   flex-direction: row;
   text-align: left;
   position: relative;
@@ -91,4 +92,23 @@
   color: red;
   font-size: 1.5em;
   margin-left: auto;
+}
+
+/* customer log */
+.customerDisplay {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+.customer {
+  height: 20em;
+  width: 10em;
+  border: 1px solid red;
+  margin-bottom: 1em;
+  padding: 1em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }

@@ -11,17 +11,23 @@ import { addTab, createSidebar, createTab, Sidebar, Tab } from "./sidebar.ts";
 import "./sidebar.css";
 import { img } from "./images.ts";
 import { Coffee, Menu } from "./coffee.ts";
+import {
+  createCustomer,
+  Customer,
+  displayCustomer,
+  visitShop,
+} from "./customer.ts";
 
 // garden /////////////////////////////////////////////////////////////////////
 
 export const sidebar: Sidebar = createSidebar("sidebar");
-const garden: Tab = createTab("garden", "garden.png");
-addTab(sidebar, garden);
+const gardenTAB: Tab = createTab("garden", "garden.png");
+addTab(sidebar, gardenTAB);
 
-garden.content.append(clicker);
-garden.content.append(counter());
+gardenTAB.content.append(clicker);
+gardenTAB.content.append(counter());
 
-garden.content.append(rateDisplay);
+gardenTAB.content.append(rateDisplay);
 
 const upgrades: ItemData[] = [
   {
@@ -61,21 +67,21 @@ const upgrades: ItemData[] = [
   },
 ];
 
-const gardenShop = new Garden(upgrades);
+const garden = new Garden(upgrades);
 const gardenShopDisplay: HTMLDivElement = document.createElement("div");
-gardenShop.displayItems(gardenShopDisplay);
+garden.displayItems(gardenShopDisplay);
 gardenShopDisplay.classList.add("itemShop");
 
-garden.content.append(gardenShopDisplay);
+gardenTAB.content.append(gardenShopDisplay);
 
 // shop ///////////////////////////////////////////////////////////////////////
 
-const inventory: Tab = createTab("inventory", "inventory.png");
+const inventoryTAB: Tab = createTab("inventory", "inventory.png");
 const shopTitle: HTMLHeadingElement = document.createElement("h2");
 shopTitle.textContent = "item shop";
-inventory.content.append(shopTitle);
-inventory.content.append(counter());
-addTab(sidebar, inventory);
+inventoryTAB.content.append(shopTitle);
+inventoryTAB.content.append(counter());
+addTab(sidebar, inventoryTAB);
 
 const shopItems: ItemData[] = [
   {
@@ -106,13 +112,13 @@ const shopItems: ItemData[] = [
     cost: 10,
     batchSize: 10,
   },
-  {
-    name: "xin",
-    description: "something new, something special",
-    imgSrc: img.lyzte,
-    cost: 10,
-    batchSize: 10,
-  },
+  // {
+  //   name: "xin",
+  //   description: "something new, something special",
+  //   imgSrc: img.lyzte,
+  //   cost: 10,
+  //   batchSize: 10,
+  // },
   {
     name: "long berri",
     description: "the bitter taste of longing",
@@ -120,20 +126,20 @@ const shopItems: ItemData[] = [
     cost: 10,
     batchSize: 10,
   },
-  {
-    name: "ramfoam",
-    description: "nostalgia and memories",
-    imgSrc: img.lyzte,
-    cost: 300,
-    batchSize: 10,
-  },
-  {
-    name: "mint leaves",
-    description: "a breath of fresh air",
-    imgSrc: img.lyzte,
-    cost: 300,
-    batchSize: 10,
-  },
+  // {
+  //   name: "ramfoam",
+  //   description: "nostalgia and memories",
+  //   imgSrc: img.lyzte,
+  //   cost: 300,
+  //   batchSize: 10,
+  // },
+  // {
+  //   name: "mint leaves",
+  //   description: "a breath of fresh air",
+  //   imgSrc: img.lyzte,
+  //   cost: 300,
+  //   batchSize: 10,
+  // },
   {
     name: "starfruit",
     description: "a peek into history",
@@ -149,16 +155,16 @@ const itemShopDisplay: HTMLDivElement = document.createElement("div");
 itemShop.displayItems(itemShopDisplay);
 itemShopDisplay.classList.add("itemShop");
 
-inventory.content.append(itemShopDisplay);
+inventoryTAB.content.append(itemShopDisplay);
 
 // menu ///////////////////////////////////////////////////////////////////////
 
-const menu: Tab = createTab("menu", "menu.png");
+const menuTAB: Tab = createTab("menu", "menu.png");
 const menuTitle: HTMLHeadingElement = document.createElement("h2");
 menuTitle.textContent = "menu";
-menu.content.append(menuTitle);
+menuTAB.content.append(menuTitle);
 // menu.content.append(counter());
-addTab(sidebar, menu);
+addTab(sidebar, menuTAB);
 
 const coffees: Coffee[] = [
   {
@@ -195,16 +201,16 @@ const coffees: Coffee[] = [
       { item: ingredients["cynnamon"], count: 2 },
     ],
   },
-  {
-    name: "cermela latte",
-    description: "a mountain of foam",
-    imgSrc: img.lyzte,
-    recipe: [
-      { item: ingredients["coffee bean"], count: 2 },
-      { item: ingredients["sugar"], count: 3 },
-      { item: ingredients["ramfoam"], count: 3 },
-    ],
-  },
+  // {
+  //   name: "cermela latte",
+  //   description: "a mountain of foam",
+  //   imgSrc: img.lyzte,
+  //   recipe: [
+  //     { item: ingredients["coffee bean"], count: 2 },
+  //     { item: ingredients["sugar"], count: 3 },
+  //     { item: ingredients["ramfoam"], count: 3 },
+  //   ],
+  // },
   {
     name: "comet coffee",
     description: "chasing the dream",
@@ -218,14 +224,78 @@ const coffees: Coffee[] = [
   },
 ];
 
-const menuObject = new Menu();
-coffees.forEach((coffee: Coffee) => menuObject.addCoffee(coffee));
+const coffeeShop = new Menu();
+coffees.forEach((coffee: Coffee) => coffeeShop.addCoffee(coffee));
 
-menu.content.append(menuObject.menuDisplay);
-menu.content.append(menuObject.menuDisplay);
+menuTAB.content.append(coffeeShop.menuDisplay);
+menuTAB.content.append(coffeeShop.menuDisplay);
 
-const button: HTMLButtonElement = document.createElement("button");
-button.addEventListener("click", () => {
-  console.log(menuObject.buyCoffee(coffees[0], itemShop));
+// customers //////////////////////////////////////////////////////////////////
+
+const customerTAB: Tab = createTab("customers", "customers.png");
+const customersTitle: HTMLHeadingElement = document.createElement("h2");
+customersTitle.textContent = "visitor log";
+customerTAB.content.append(customersTitle);
+
+addTab(sidebar, customerTAB);
+
+const customerList: Customer[] = [
+  createCustomer("lydon", "am just a simple wanderer", img.lyzte, [
+    coffeeShop.menuItems["basic coffee"],
+  ]),
+  createCustomer("sama", "life is a bit funky sometimes", img.lyzte, [
+    coffeeShop.menuItems["basic coffee"],
+    coffeeShop.menuItems["basic latte"],
+  ]),
+  createCustomer("jakk", "beep boop bop", img.lyzte, [
+    coffeeShop.menuItems["basic latte"],
+  ]),
+  createCustomer("leon", "anything really", img.lyzte, [
+    coffeeShop.menuItems["basic cappuccino"],
+    coffeeShop.menuItems["tanget"],
+  ]),
+  createCustomer("janet", "perfection is i", img.lyzte, [
+    coffeeShop.menuItems["tanget"],
+  ]),
+  createCustomer("epoch", "he who tears space apart", img.lyzte, [
+    coffeeShop.menuItems["comet coffee"],
+  ]),
+];
+
+function customerVisit() {
+  const possible: Customer[] = customerList.filter((customer) => {
+    return customer.preferredCoffees.some((coffee) =>
+      coffeeShop.coffeeAvailable(coffee),
+    );
+  });
+
+  if (possible.length > 0) {
+    const customer: Customer =
+      possible[Math.floor(Math.random() * possible.length)];
+    const prefAvailable: Coffee[] = customer.preferredCoffees.filter((coffee) =>
+      coffeeShop.coffeeAvailable(coffee),
+    );
+    const coffee: Coffee =
+      prefAvailable[Math.floor(Math.random() * prefAvailable.length)];
+    console.log(customer.name, "visiting shop for", coffee.name);
+    visitShop(customer, itemShop, coffeeShop, coffee);
+  } else {
+    console.log("no one wants coffee");
+  }
+
+  // customers come every 3-10 seconds
+  setTimeout(
+    () => {
+      customerVisit();
+    },
+    Math.random() * 7000 + 3000,
+  );
+}
+customerVisit();
+
+const customerDisplay: HTMLDivElement = document.createElement("div");
+customerDisplay.classList.add("customerDisplay");
+customerList.forEach((customer: Customer) => {
+  customerDisplay.append(displayCustomer(customer));
 });
-menu.content.append(button);
+customerTAB.content.append(customerDisplay);

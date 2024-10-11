@@ -29,6 +29,21 @@ export class Menu {
     this.menu = [];
   }
 
+  get menuItems(): Record<string, Coffee> {
+    return this.menu.reduce(
+      (accumulator, item) => {
+        accumulator[item.coffee.name] = item.coffee;
+        return accumulator;
+      },
+      {} as Record<string, Coffee>,
+    );
+  }
+
+  coffeeAvailable(coffee: Coffee): boolean {
+    const item = this.menu.find((item) => item.coffee === coffee);
+    return item ? item.available : false;
+  }
+
   addCoffee(coffee: Coffee): void {
     // display coffee
     const div = document.createElement("div");
