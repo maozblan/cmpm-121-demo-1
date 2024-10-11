@@ -5,5 +5,9 @@
 }
 #coffeeShop {
   width: 40em;
-  height: auto
+  height: auto;
+}
+#gameName {
+  opacity: 0.5;
+  margin: 0;
 }

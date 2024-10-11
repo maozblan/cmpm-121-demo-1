@@ -1,8 +1,6 @@
 .sidebar {
   height: 100%;
   overflow-x: hidden;
-  min-width: 750px;
-  margin-left: auto;
   display: flex;
   flex-direction: row-reverse;
   z-index: 100;
@@ -129,5 +127,5 @@
 .coffee img,
 .customer img,
 .item img {
-  opacity: 0.65;
+  opacity: 0.9;
 }
