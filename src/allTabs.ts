@@ -17,6 +17,7 @@ import {
   displayCustomer,
   visitShop,
 } from "./customer.ts";
+import { addNotification } from "./main.ts";
 
 // garden /////////////////////////////////////////////////////////////////////
 
@@ -279,17 +280,18 @@ function customerVisit() {
     const coffee: Coffee =
       prefAvailable[Math.floor(Math.random() * prefAvailable.length)];
     console.log(customer.name, "visiting shop for", coffee.name);
+    addNotification(`${customer.name} visited the shop for ${coffee.name}`);
     visitShop(customer, itemShop, coffeeShop, coffee);
   } else {
     console.log("no one wants coffee");
   }
 
-  // customers come every 3-10 seconds
+  // customers come every 1-10 seconds
   setTimeout(
     () => {
       customerVisit();
     },
-    Math.random() * 7000 + 3000,
+    Math.random() * 9000 + 1000,
   );
 }
 customerVisit();

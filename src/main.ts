@@ -33,7 +33,7 @@ export function addNotification(text: string): void {
   notifications.append(notification);
   setTimeout(() => {
     notification.remove();
-  });
+  }, 3000);
 }
 
 // append sidebar
