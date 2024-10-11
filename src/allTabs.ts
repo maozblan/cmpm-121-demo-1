@@ -17,7 +17,7 @@ import {
   displayCustomer,
   visitShop,
 } from "./customer.ts";
-import { addNotification } from "./main.ts";
+import { addNotification, visitShopUI } from "./main.ts";
 
 // garden /////////////////////////////////////////////////////////////////////
 
@@ -281,6 +281,7 @@ function customerVisit() {
       prefAvailable[Math.floor(Math.random() * prefAvailable.length)];
     console.log(customer.name, "visiting shop for", coffee.name);
     addNotification(`${customer.name} visited the shop for ${coffee.name}`);
+    visitShopUI();
     visitShop(customer, itemShop, coffeeShop, coffee);
   } else {
     console.log("no one wants coffee");

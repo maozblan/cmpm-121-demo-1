@@ -3,11 +3,60 @@
   margin-left: auto;
   margin-right: auto;
 }
-#coffeeShop {
-  width: 40em;
-  height: auto;
-}
 #gameName {
   opacity: 0.5;
   margin: 0;
+}
+
+#coffeeShopDiv {
+  width: 40em;
+  height: auto;
+  position: relative;
+}
+#coffeeShopImg {
+  width: 40em;
+  height: auto;
+}
+.ghost {
+  height: 10em;
+  position: absolute;
+  top: 18em;
+  left: 13em;
+  animation:
+    fadeInOut 3s linear forwards,
+    ghostMovement 3s linear;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes ghostMovement {
+  0% {
+    top: 19em;
+    left: 11em;
+  }
+  20% {
+    top: 18em;
+    left: 13em;
+  }
+  80% {
+    top: 18em;
+    left: 13em;
+  }
+  100% {
+    top: 15em;
+    left: 13em;
+  }
 }
