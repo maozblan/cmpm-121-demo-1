@@ -1,5 +1,6 @@
 import {
   Garden,
+  Item,
   ItemData,
   Shop,
   clicker,
@@ -9,6 +10,7 @@ import {
 import { addTab, createSidebar, createTab, Sidebar, Tab } from "./sidebar.ts";
 import "./sidebar.css";
 import { img } from "./images.ts";
+import { Coffee, Menu } from "./coffee.ts";
 
 // garden /////////////////////////////////////////////////////////////////////
 
@@ -112,7 +114,7 @@ const shopItems: ItemData[] = [
     batchSize: 10,
   },
   {
-    name: "long berry",
+    name: "long berri",
     description: "the bitter taste of longing",
     imgSrc: img.lyzte,
     cost: 10,
@@ -142,8 +144,82 @@ const shopItems: ItemData[] = [
 ];
 
 const itemShop = new Shop(shopItems);
+const ingredients: Record<string, Item> = itemShop.shopItems;
 const itemShopDisplay: HTMLDivElement = document.createElement("div");
 itemShop.displayItems(itemShopDisplay);
 itemShopDisplay.classList.add("itemShop");
 
 inventory.content.append(itemShopDisplay);
+
+// menu ///////////////////////////////////////////////////////////////////////
+
+const menu: Tab = createTab("menu", "menu.png");
+const menuTitle: HTMLHeadingElement = document.createElement("h2");
+menuTitle.textContent = "menu";
+menu.content.append(menuTitle);
+// menu.content.append(counter());
+addTab(sidebar, menu);
+
+const coffees: Coffee[] = [
+  {
+    name: "basic coffee",
+    description: "like the old days",
+    imgSrc: img.lyzte,
+    recipe: [{ item: ingredients["coffee bean"], count: 5 }],
+  },
+  {
+    name: "basic latte",
+    description: "swirls of milk",
+    imgSrc: img.lyzte,
+    recipe: [
+      { item: ingredients["coffee bean"], count: 3 },
+      { item: ingredients["milk"], count: 2 },
+    ],
+  },
+  {
+    name: "basic cappuccino",
+    description: "sweetness unmatched",
+    imgSrc: img.lyzte,
+    recipe: [
+      { item: ingredients["coffee bean"], count: 1 },
+      { item: ingredients["sugar"], count: 4 },
+    ],
+  },
+  {
+    name: "tanget",
+    description: "sweet and spicy",
+    imgSrc: img.lyzte,
+    recipe: [
+      { item: ingredients["coffee bean"], count: 1 },
+      { item: ingredients["sugar"], count: 2 },
+      { item: ingredients["cynnamon"], count: 2 },
+    ],
+  },
+  {
+    name: "cermela latte",
+    description: "a mountain of foam",
+    imgSrc: img.lyzte,
+    recipe: [
+      { item: ingredients["coffee bean"], count: 2 },
+      { item: ingredients["sugar"], count: 3 },
+      { item: ingredients["ramfoam"], count: 3 },
+    ],
+  },
+  {
+    name: "comet coffee",
+    description: "chasing the dream",
+    imgSrc: img.lyzte,
+    recipe: [
+      { item: ingredients["coffee bean"], count: 2 },
+      { item: ingredients["milk"], count: 1 },
+      { item: ingredients["long berri"], count: 1 },
+      { item: ingredients["starfruit"], count: 2 },
+    ],
+  },
+];
+
+const menuObject = new Menu();
+coffees.forEach((coffee: Coffee) => menuObject.addCoffee(coffee));
+
+menu.content.append(menuObject.menuDisplay);
+menu.content.append(menuObject.menuDisplay);

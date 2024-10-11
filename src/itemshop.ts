@@ -16,6 +16,10 @@ clicker.append(clickerImg);
 // coffee counter
 export let currencyCount: number = 0;
 export function updateCurrencyCount(amount: number): void {
+  // it goes negative sometimes :(
+  const temp: number = currencyCount + amount;
+  if (temp < 0) return;
+
   currencyCount += amount;
 }
 const counters: HTMLDivElement[] = [];
@@ -167,6 +171,16 @@ class itemShop {
 export class Shop extends itemShop {
   constructor(itemList: ItemData[]) {
     super(itemList);
+  }
+
+  get shopItems(): Record<string, Item> {
+    return this.items.reduce(
+      (accumulator, item) => {
+        accumulator[item.name] = item;
+        return accumulator;
+      },
+      {} as Record<string, Item>,
+    );
   }
 
   purchase(item: Item): void {

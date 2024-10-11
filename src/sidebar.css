@@ -22,15 +22,15 @@
   overflow-x: hidden;
 }
 .sidebarContent.open {
-  width: 30vw;
+  width: 25vw;
   min-width: 700px;
   padding: 1em;
 }
 
 .tab {
   padding: 1em;
-  border-bottom: 1px solid #4f4f4f;
   background-color: #343434;
+  margin-bottom: 0.5em;
   border-radius: 7px 0 0 7px;
   cursor: pointer;
 }
@@ -63,4 +63,32 @@
 }
 .sidebar h2 {
   margin-top: 0;
+}
+
+/* coffee menu stuff */
+.coffee img {
+  height: 100%;
+  width: auto;
+}
+.coffee {
+  height: 150px;
+  display: flex;
+  flex-direction: row;
+  text-align: left;
+  position: relative;
+  align-items: center;
+}
+.cover {
+  background-color: #151515a5;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  text-align: center;
+  cursor: pointer;
+}
+.warning {
+  color: red;
+  font-size: 1.5em;
+  margin-left: auto;
 }

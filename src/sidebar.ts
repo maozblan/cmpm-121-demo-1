@@ -57,10 +57,8 @@ export function toggleSidebar(sidebar: Sidebar, tab: Tab) {
 
   if (openTab === tab.id) {
     // closing the sidebar if clicking the same active tab
-    console.log("closing sidebar");
     sidebar.content.classList.remove("open");
   } else {
-    console.log("opening sidebar");
     sidebar.content.classList.add("open");
     tab.tab.classList.add("open");
     tab.content.classList.add("open");

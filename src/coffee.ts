@@ -1,61 +1,102 @@
-import { Item } from "./itemshop";
+import { currencyCount, Item, updateCurrencyCount } from "./itemshop";
 
-interface Coffee {
+export interface Coffee {
   name: string;
   description: string;
   imgSrc: string;
-  cost: number;
   recipe: Ingredient[];
 }
 
 interface Ingredient {
   item: Item;
-  profile: {
-    // on scale -5 to 5
-    sweet: number;
-    creamy: number;
-    strength: number;
-    happiness: number;
-  };
+  count: number;
 }
 
-const MAX_MENU_SLOTS: number = 6;
+interface MenuItem {
+  coffee: Coffee;
+  content: HTMLDivElement;
+  cost: number;
+  bought: boolean;
+}
 
 export class Menu {
-  private menu: {
-    coffee: Coffee;
-    cost: number;
-    bought: boolean;
-  }[];
-  private menuSlots: {
-    coffee: Coffee | null;
-    display: {
-      name: HTMLHeadingElement;
-      content: HTMLDivElement;
-    };
-    available: boolean;
-    bought: boolean;
-  }[]; 
+  private menu: MenuItem[];
+  menuDisplay: HTMLDivElement;
 
   constructor() {
+    this.menuDisplay = document.createElement("div");
     this.menu = [];
-    this.menuSlots = [];
-    for (let i = 0; i < MAX_MENU_SLOTS; i++) {
-      this.menuSlots.push({
-        coffee: null,
-        display: {
-          name: document.createElement("h2"),
-          content: document.createElement("div"),
-        },
-        available: false,
-        bought: false,
-      });
-    }
   }
 
   addCoffee(coffee: Coffee): void {
-    this.menu.push({ coffee: coffee, cost: coffee.cost, bought: false });
-
     // display coffee
+    const div = document.createElement("div");
+    div.classList.add("coffee");
+    const img = document.createElement("img");
+    img.src = coffee.imgSrc;
+    div.append(img);
+    const text = document.createElement("div");
+    const name = document.createElement("h2");
+    name.textContent = coffee.name;
+    const description = document.createElement("div");
+    description.textContent = coffee.description;
+    const recipe = document.createElement("div");
+    recipe.textContent = `recipe: ${coffee.recipe.map((item) => `${item.count} ${item.item.name}`).join(", ")}`;
+    text.append(name, description, recipe);
+    div.append(text);
+
+    // add coffee to menu
+    const item: MenuItem = {
+      coffee: coffee,
+      content: div,
+      cost: this.menu.length * 125,
+      bought: false,
+    };
+    this.menu.push(item);
+
+    // missing ingredients warning
+    const warning: HTMLDivElement = document.createElement("div");
+    warning.classList.add("warning");
+    setInterval(() => {
+      if (!this.checkIngredients(item) && item.bought) {
+        warning.textContent = "missing ingredients!";
+      } else {
+        warning.textContent = "";
+      }
+    }, 250);
+    div.append(warning);
+
+    // logic for purchase
+    const cover = document.createElement("div");
+    cover.classList.add("cover");
+    const coverText = document.createElement("h1");
+    coverText.textContent = `purchase recipe for: ${this.menu[this.menu.length - 1].cost} lyztes`;
+    cover.addEventListener("click", () => {
+      if (this.purchaseRecipe(item)) {
+        cover.remove();
+        item.bought = true;
+      }
+    });
+    cover.append(coverText);
+    div.append(cover);
+
+    this.menuDisplay.append(div);
+  }
+
+  purchaseRecipe(item: MenuItem): boolean {
+    if (currencyCount >= item.cost) {
+      updateCurrencyCount(-item.cost);
+      return true;
+    }
+    return false;
+  }
+
+  private checkIngredients(item: MenuItem): boolean {
+    for (const ingredient of item.coffee.recipe) {
+      if (ingredient.item.numBought < ingredient.count) {
+        return false;
+      }
+    }
+    return true;
   }
 }
