@@ -104,8 +104,9 @@ export interface ItemData {
 class itemShop {
   content: HTMLDivElement;
   items: Item[];
+  costMultiplier: number;
 
-  constructor(itemList: ItemData[]) {
+  constructor(itemList: ItemData[], rate: number) {
     this.items = itemList.map((item: ItemData) => this.createItem(item));
     this.content = document.createElement("div");
     this.items.forEach((item: Item) => {
@@ -116,12 +117,14 @@ class itemShop {
     setInterval(() => {
       this.update();
     }, 500);
+
+    this.costMultiplier = rate;
   }
 
   purchase(item: Item): void {
     updateCurrencyCount(-item.cost);
-    item.numBought++;
-    item.cost *= 1.15;
+    item.numBought += item.batchSize ? item.batchSize : 1;
+    item.cost *= this.costMultiplier;
     updateRate(item.efficiency ? item.efficiency : 0);
   }
 
@@ -170,7 +173,7 @@ class itemShop {
 
 export class Shop extends itemShop {
   constructor(itemList: ItemData[]) {
-    super(itemList);
+    super(itemList, 1.5);
   }
 
   get shopItems(): Record<string, Item> {
@@ -181,12 +184,6 @@ export class Shop extends itemShop {
       },
       {} as Record<string, Item>,
     );
-  }
-
-  purchase(item: Item): void {
-    updateCurrencyCount(-item.cost);
-    item.cost *= 1.5;
-    item.numBought += item.batchSize ? item.batchSize : 1;
   }
 
   use(item: Item, amount: number): void {
@@ -206,7 +203,7 @@ export class Shop extends itemShop {
 
 export class Garden extends itemShop {
   constructor(itemList: ItemData[]) {
-    super(itemList);
+    super(itemList, 1.15);
   }
 
   update() {

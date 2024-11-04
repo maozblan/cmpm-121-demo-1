@@ -18,6 +18,7 @@ header.innerHTML = gameName;
 graphics.append(header);
 
 // coffee shop graphics
+const UI_DISPLAY_TIME: number = 3000;
 const coffeeShopDiv: HTMLDivElement = document.createElement("div");
 coffeeShopDiv.id = "coffeeShopDiv";
 graphics.append(coffeeShopDiv);
@@ -36,7 +37,7 @@ export function addNotification(text: string): void {
   notifications.append(notification);
   setTimeout(() => {
     notification.remove();
-  }, 3000);
+  }, UI_DISPLAY_TIME);
 }
 
 export function visitShopUI(): void {
@@ -46,7 +47,7 @@ export function visitShopUI(): void {
   coffeeShopDiv.append(ghost);
   setTimeout(() => {
     ghost.remove();
-  }, 3000);
+  }, UI_DISPLAY_TIME);
 }
 
 // append sidebar
