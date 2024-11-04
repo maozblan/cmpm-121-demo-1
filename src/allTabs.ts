@@ -7,7 +7,7 @@ import {
   counter,
   rateDisplay,
 } from "./itemshop.ts";
-import { addTab, createSidebar, createTab, Sidebar, Tab } from "./sidebar.ts";
+import { Sidebar, Tab } from "./sidebar.ts";
 import "./sidebar.css";
 import { img } from "./images.ts";
 import { Coffee, Menu } from "./coffee.ts";
@@ -21,10 +21,8 @@ import { addNotification, visitShopUI } from "./main.ts";
 
 // garden /////////////////////////////////////////////////////////////////////
 
-export const sidebar: Sidebar = createSidebar("sidebar");
-const gardenTAB: Tab = createTab("garden", img.gardenIcon);
-
-addTab(sidebar, gardenTAB);
+export const sidebar: Sidebar = new Sidebar("sidebar");
+const gardenTAB: Tab = sidebar.createTab("garden", img.gardenIcon);
 
 gardenTAB.content.append(clicker);
 gardenTAB.content.append(counter());
@@ -78,12 +76,11 @@ gardenTAB.content.append(gardenShopDisplay);
 
 // shop ///////////////////////////////////////////////////////////////////////
 
-const inventoryTAB: Tab = createTab("inventory", img.shopIcon);
+const inventoryTAB: Tab = sidebar.createTab("inventory", img.shopIcon);
 const shopTitle: HTMLHeadingElement = document.createElement("h2");
 shopTitle.textContent = "item shop";
 inventoryTAB.content.append(shopTitle);
 inventoryTAB.content.append(counter());
-addTab(sidebar, inventoryTAB);
 
 const shopItems: ItemData[] = [
   {
@@ -161,12 +158,11 @@ inventoryTAB.content.append(itemShopDisplay);
 
 // menu ///////////////////////////////////////////////////////////////////////
 
-const menuTAB: Tab = createTab("menu", img.menuIcon);
+const menuTAB: Tab = sidebar.createTab("menu", img.menuIcon);
 const menuTitle: HTMLHeadingElement = document.createElement("h2");
 menuTitle.textContent = "menu";
 menuTAB.content.append(menuTitle);
 // menu.content.append(counter());
-addTab(sidebar, menuTAB);
 
 const coffees: Coffee[] = [
   {
@@ -234,12 +230,10 @@ menuTAB.content.append(coffeeShop.menuDisplay);
 
 // customers //////////////////////////////////////////////////////////////////
 
-const customerTAB: Tab = createTab("customers", img.customersIcon);
+const customerTAB: Tab = sidebar.createTab("customers", img.customersIcon);
 const customersTitle: HTMLHeadingElement = document.createElement("h2");
 customersTitle.textContent = "visitor log";
 customerTAB.content.append(customersTitle);
-
-addTab(sidebar, customerTAB);
 
 const customerList: Customer[] = [
   createCustomer("lydon", "am just a simple wanderer", img.person, [

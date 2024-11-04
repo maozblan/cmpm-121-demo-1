@@ -27,6 +27,7 @@
     ghostMovement 3s linear;
 }
 
+/* ghost movement */
 @keyframes fadeInOut {
   0% {
     opacity: 0;
@@ -59,4 +60,19 @@
     top: 15em;
     left: 13em;
   }
+}
+
+/* cursor */
+:root {
+  cursor:
+    url("/cursor_norm.png") 12 12,
+    default;
+}
+
+button,
+.tab,
+.cover {
+  cursor:
+    url("/cursor_pointer.png") 12 12,
+    pointer;
 }
